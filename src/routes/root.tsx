@@ -1,5 +1,5 @@
 
-import { AppBar, Box, Button, Link, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Button, Link, Toolbar } from "@mui/material";
 import React from "react";
 import { Link as RouterLink, Outlet } from "react-router-dom";
 import theme from "../lib/theme";
