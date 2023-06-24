@@ -71,11 +71,9 @@ export const Home: React.FC = () => {
             component={RouterLink}
             to={`/detail/${image.id}`}
             sx={{ textDecoration: "none", color: "black" }}
+            key={image.id}
           >
-            <ImageListItem
-              key={image.id}
-              sx={{ maxHeight: 280, maxWidth: "100%" }}
-            >
+            <ImageListItem sx={{ maxHeight: 280, maxWidth: "100%" }}>
               <img src={image.image} style={{ height: 170, width: "100%" }} />
               <ImageListItemBar
                 title={image.title}
