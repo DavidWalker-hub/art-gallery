@@ -1,7 +1,7 @@
 
-import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Button, Link, Toolbar, Typography } from "@mui/material";
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Link as RouterLink, Outlet } from "react-router-dom";
 import theme from "../lib/theme";
 
 export const Root: React.FC = () => {
@@ -12,14 +12,15 @@ export const Root: React.FC = () => {
         sx={{ backgroundColor: theme.palette.primary.light }}
       >
         <Toolbar>
-          <Typography
+          <Link
+            component={RouterLink}
+            to={"/"}
             variant="h6"
-            component="div"
-            sx={{ flexGrow: 1 }}
+            sx={{ flexGrow: 1, textDecoration: "none" }}
             color={theme.palette.primary.contrastText}
           >
             Art Gallery
-          </Typography>
+          </Link>
           <Button sx={{ color: theme.palette.primary.contrastText }}>
             Login
           </Button>
