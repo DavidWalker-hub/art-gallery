@@ -1,8 +1,17 @@
-import { Container, ImageList, ImageListItem } from "@mui/material";
+import {
+  Box,
+  Container,
+  Grid,
+  ImageList,
+  ImageListItem,
+  ImageListItemBar,
+  Link,
+} from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { Image } from "../types/image";
+import { Link as RouterLink } from "react-router-dom";
 
 export const Home: React.FC = () => {
   const { data } = useQuery(
@@ -40,29 +49,46 @@ export const Home: React.FC = () => {
           });
           return data
             .filter((record: Image) => record.image !== null)
-            .slice(0, 5);
+            .slice(0, 6);
         }),
     {
       refetchOnWindowFocus: false,
     }
   );
-  console.log("data", data);
+
   return (
     <Container>
       <ImageList
         sx={{
-          width: "100%",
-          height: "40vh",
-          marginTop: "30vh",
-          marginBottom: "auto",
+          marginTop: "10vh",
         }}
-        cols={5}
+        rowHeight={300}
+        cols={3}
         gap={6}
       >
         {data?.map((image: Image) => (
-          <ImageListItem key={image.id}>
-            <img src={image.image} width="100%" height="100%" />
-          </ImageListItem>
+          <Link
+            component={RouterLink}
+            to={`/detail/${image.id}`}
+            sx={{ textDecoration: "none", color: "black" }}
+          >
+            <ImageListItem
+              key={image.id}
+              sx={{ maxHeight: 280, maxWidth: "100%" }}
+            >
+              <img src={image.image} style={{ height: 170, width: "100%" }} />
+              <ImageListItemBar
+                title={image.title}
+                position="below"
+                subtitle={
+                  <span>
+                    Artist: {image.artist} | Date: {image.year}
+                  </span>
+                }
+                sx={{ maxWidth: 350 }}
+              />
+            </ImageListItem>
+          </Link>
         ))}
       </ImageList>
     </Container>
