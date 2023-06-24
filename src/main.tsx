@@ -7,6 +7,7 @@ import { ThemeProvider } from "@emotion/react";
 import theme from "./lib/theme";
 import { Home } from "./routes/Home";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { Detail } from "./routes/Detail";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "detail/:imageId",
+        element: <Detail />,
       },
     ],
   },
