@@ -8,6 +8,8 @@ import theme from "./lib/theme";
 import { Home } from "./routes/Home";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Detail } from "./routes/Detail";
+import { AppContextProvider } from "./contexts/appContext";
+import { Auth } from "./routes/Auth";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +26,10 @@ const router = createBrowserRouter([
         path: "detail/:imageId",
         element: <Detail />,
       },
+      {
+        path: "auth",
+        element: <Auth />,
+      },
     ],
   },
   // {
@@ -36,7 +42,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
-        <RouterProvider router={router} />
+        <AppContextProvider>
+          <RouterProvider router={router} />
+        </AppContextProvider>
       </ThemeProvider>
     </QueryClientProvider>
   </React.StrictMode>
