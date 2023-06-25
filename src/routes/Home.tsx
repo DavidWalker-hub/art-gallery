@@ -43,7 +43,7 @@ export const Home: React.FC = () => {
               id: record.id,
               title: record.title,
               image: record.primaryimageurl,
-              year: record.yearmade,
+              year: record.dated,
               artist,
             };
           });
@@ -55,7 +55,7 @@ export const Home: React.FC = () => {
       refetchOnWindowFocus: false,
     }
   );
-
+  console.log("data", data);
   return (
     <Container>
       <ImageList
