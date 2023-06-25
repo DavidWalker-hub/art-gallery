@@ -1,10 +1,38 @@
 
-import { AppBar, Box, Button, Link, Toolbar } from "@mui/material";
-import React from "react";
-import { Link as RouterLink, Outlet } from "react-router-dom";
+import {
+  AppBar,
+  Avatar,
+  Box,
+  Button,
+  IconButton,
+  Link,
+  Menu,
+  MenuItem,
+  Toolbar,
+} from "@mui/material";
+import React, { useState } from "react";
+import { Link as RouterLink, Outlet, useNavigate } from "react-router-dom";
 import theme from "../lib/theme";
+import { useAppContext } from "../contexts/appContext";
 
 export const Root: React.FC = () => {
+  const { user, logout } = useAppContext();
+  const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/");
+    handleClose();
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -21,9 +49,28 @@ export const Root: React.FC = () => {
           >
             Art Gallery
           </Link>
-          <Button sx={{ color: theme.palette.primary.contrastText }}>
-            Login
-          </Button>
+          {!user ? (
+            <Link
+              component={RouterLink}
+              to="/auth"
+              sx={{ textDecoration: "none" }}
+              color={theme.palette.primary.contrastText}
+            >
+              Login
+            </Link>
+          ) : (
+            <div>
+              <IconButton onClick={handleClick}>
+                <Avatar>{user.email?.slice(0, 1).toUpperCase()}</Avatar>
+              </IconButton>
+              <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+                <MenuItem onClick={() => navigate("/collection")}>
+                  Collection
+                </MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              </Menu>
+            </div>
+          )}
         </Toolbar>
       </AppBar>
       <Outlet />
