@@ -1,15 +1,16 @@
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import theme from "../lib/theme";
+import { useAppContext } from "../contexts/appContext";
 
 export const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const { login } = useAppContext();
 
   const handleLogin = (event: any) => {
     event.preventDefault();
-    console.log("email", email);
-    console.log("password", password);
+    login(email, password);
   };
   return (
     <Box>
