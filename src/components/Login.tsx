@@ -2,15 +2,18 @@ import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import theme from "../lib/theme";
 import { useAppContext } from "../contexts/appContext";
+import { useNavigate } from "react-router-dom";
 
 export const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const navigate = useNavigate();
   const { login } = useAppContext();
 
   const handleLogin = (event: any) => {
     event.preventDefault();
     login(email, password);
+    navigate("/");
   };
   return (
     <Box>
