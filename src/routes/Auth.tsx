@@ -1,4 +1,4 @@
-import { Button, Container, Grid, Link, Typography } from "@mui/material";
+import { Container, Grid, Link, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { Login } from "../components/Login";
 import { Register } from "../components/Register";

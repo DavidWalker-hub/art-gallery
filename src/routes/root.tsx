@@ -1,16 +1,15 @@
 
+import React from "react";
 import {
   AppBar,
   Avatar,
   Box,
-  Button,
   IconButton,
   Link,
   Menu,
   MenuItem,
   Toolbar,
 } from "@mui/material";
-import React, { useState } from "react";
 import { Link as RouterLink, Outlet, useNavigate } from "react-router-dom";
 import theme from "../lib/theme";
 import { useAppContext } from "../contexts/appContext";

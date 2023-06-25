@@ -7,7 +7,7 @@ export const Register: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const { register, user } = useAppContext();
   console.log("user", user);
-  const handleRegister = (event: any) => {
+  const handleRegister = (event: React.FormEvent) => {
     event.preventDefault();
     register(email, password);
     console.log("email", email);
