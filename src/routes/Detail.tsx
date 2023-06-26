@@ -2,12 +2,14 @@ import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import axios from "axios";
 import React from "react";
 import { useQuery } from "react-query";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAppContext } from "../contexts/appContext";
 import { Image } from "../types/image";
 
 export const Detail: React.FC = () => {
   const { imageId } = useParams();
+  const navigate = useNavigate();
+
   const { user, addArtwork } = useAppContext();
 
   const { data } = useQuery(["detail", imageId], () =>
@@ -31,15 +33,16 @@ export const Detail: React.FC = () => {
     return artist;
   };
 
-  const addToCollection = () => {
+  const addToCollection = async () => {
     const newArtwork: Image = {
-      id: data.id,
-      image: data.primaryimageurl,
+      harvard_ref: data.id,
+      image_src: data.primaryimageurl,
       title: data.title,
       year: data.dated,
       artist: findArtist(data),
     };
-    addArtwork(newArtwork);
+    await addArtwork(newArtwork);
+    navigate("/collection");
   };
 
   return (
