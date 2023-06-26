@@ -160,7 +160,7 @@ const useAppContextStore = () => {
 
   const getUserCollection = async () => {
     if (user) {
-      const { data: users_artwork, error } = await supabase
+      const { data: users_artwork } = await supabase
         .from("users_artwork")
         .select(`artwork (*)`)
         .eq("user_id", user.id);
