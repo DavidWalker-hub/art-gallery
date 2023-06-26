@@ -10,6 +10,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { Detail } from "./routes/Detail";
 import { AppContextProvider } from "./contexts/appContext";
 import { Auth } from "./routes/Auth";
+import { Collection } from "./routes/Collection";
 
 const queryClient = new QueryClient();
 
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
       },
       {
         path: "collection",
-        element: <>test</>,
+        element: <Collection />,
       },
     ],
   },
