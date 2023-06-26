@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { User, createClient } from "@supabase/supabase-js";
 import { createContext, useContext, useEffect, useState } from "react";
+import { Image } from "../types/image";
 
 interface IAppContext {
   register: (email: string, password: string) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   user: User | null;
+  addArtwork: (artwork: Image) => Promise<void>;
 }
 
 const AppContext = createContext<IAppContext>({
@@ -14,6 +16,7 @@ const AppContext = createContext<IAppContext>({
   login: async (email: string, pasword: string) => {},
   logout: async () => {},
   user: null,
+  addArtwork: async (artwork: Image) => {},
 });
 
 export const AppContextProvider = ({
@@ -49,18 +52,18 @@ const useAppContextStore = () => {
   };
 
   useEffect(() => {
+    const getUser = async () => {
+      try {
+        const { data } = await supabase.auth.getUser();
+        console.log("data", data);
+        setUser(data.user);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
     getUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const getUser = async () => {
-    try {
-      const { data } = await supabase.auth.getUser();
-      console.log("data", data);
-      setUser(data.user);
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
 
   const login = async (email: string, password: string) => {
     try {
@@ -84,5 +87,43 @@ const useAppContextStore = () => {
     }
   };
 
-  return { register, user, logout, login };
+  const addArtwork = async (artwork: Image) => {
+    try {
+      const { data: savedArtwork } = await supabase
+        .from("artwork")
+        .select("id")
+        .eq("harvard_ref", artwork.id);
+
+      if (savedArtwork?.length === 0 || savedArtwork === null) {
+        const { data: createdArtwork } = await supabase
+          .from("artwork")
+          .insert([
+            {
+              harvard_ref: artwork.id,
+              image_src: artwork.image,
+              title: artwork.title,
+              artist: artwork.artist,
+              year: artwork.year,
+            },
+          ])
+          .select();
+        if (createdArtwork) {
+          const savedArt = createdArtwork.find(
+            (art) => art.harvard_ref === `${artwork.id}`
+          );
+          await supabase
+            .from("users_artwork")
+            .insert([{ user_id: user?.id, artwork_id: savedArt.id }]);
+        }
+      } else {
+        await supabase
+          .from("users_artwork")
+          .insert([{ user_id: user?.id, artwork_id: savedArtwork[0].id }]);
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  return { register, user, logout, login, addArtwork };
 };
