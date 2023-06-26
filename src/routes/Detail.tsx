@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppContext } from "../contexts/AppContext";
 import { Image } from "../types/image";
+import { Loader } from "../components/Loader";
 
 export const Detail: React.FC = () => {
   const { imageId } = useParams();
@@ -12,7 +13,7 @@ export const Detail: React.FC = () => {
 
   const { user, addArtwork } = useAppContext();
 
-  const { data } = useQuery(["detail", imageId], () =>
+  const { data, isLoading } = useQuery(["detail", imageId], () =>
     axios
       .get(`https://api.harvardartmuseums.org/object/${imageId}`, {
         params: { apikey: import.meta.env.VITE_ART_APIKEY },
@@ -44,6 +45,10 @@ export const Detail: React.FC = () => {
     await addArtwork(newArtwork);
     navigate("/collection");
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <Container>

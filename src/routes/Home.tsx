@@ -4,9 +4,10 @@ import React from "react";
 import { useQuery } from "react-query";
 import { Image } from "../types/image";
 import { Gallery } from "../components/Gallery";
+import { Loader } from "../components/Loader";
 
 export const Home: React.FC = () => {
-  const { data } = useQuery(
+  const { data, isLoading } = useQuery(
     "collection",
     () =>
       axios
@@ -49,8 +50,6 @@ export const Home: React.FC = () => {
   );
   console.log("data", data);
   return (
-    <Container>
-      <Gallery images={data} />
-    </Container>
+    <Container>{isLoading ? <Loader /> : <Gallery images={data} />}</Container>
   );
 };
