@@ -90,12 +90,14 @@ const useAppContextStore = () => {
   };
 
   const logout = async () => {
+    setIsSupabaseLoading(true);
     try {
       await supabase.auth.signOut();
       setUser(null);
     } catch (error) {
       console.log("error", error);
     }
+    setIsSupabaseLoading(false);
   };
 
   const addArtwork = async (artwork: Image) => {
