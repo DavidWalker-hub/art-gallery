@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { Link as RouterLink, Outlet, useNavigate } from "react-router-dom";
 import theme from "../lib/theme";
-import { useAppContext } from "../contexts/appContext";
+import { useAppContext } from "../contexts/AppContext";
 
 export const Root: React.FC = () => {
   const { user, logout } = useAppContext();

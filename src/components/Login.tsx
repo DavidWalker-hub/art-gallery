@@ -1,6 +1,6 @@
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { useAppContext } from "../contexts/appContext";
+import { useAppContext } from "../contexts/AppContext";
 import { useNavigate } from "react-router-dom";
 
 export const Login: React.FC = () => {

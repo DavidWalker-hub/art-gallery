@@ -3,7 +3,7 @@ import axios from "axios";
 import React from "react";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAppContext } from "../contexts/appContext";
+import { useAppContext } from "../contexts/AppContext";
 import { Image } from "../types/image";
 
 export const Detail: React.FC = () => {

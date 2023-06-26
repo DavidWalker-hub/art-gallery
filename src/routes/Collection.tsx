@@ -1,6 +1,6 @@
 import { Container, Typography } from "@mui/material";
 import React from "react";
-import { useAppContext } from "../contexts/appContext";
+import { useAppContext } from "../contexts/AppContext";
 import { Gallery } from "../components/Gallery";
 import { Image } from "../types/image";
 

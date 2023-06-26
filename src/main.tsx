@@ -8,7 +8,7 @@ import theme from "./lib/theme";
 import { Home } from "./routes/Home";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Detail } from "./routes/Detail";
-import { AppContextProvider } from "./contexts/appContext";
+import { AppContextProvider } from "./contexts/AppContext";
 import { Auth } from "./routes/Auth";
 import { Collection } from "./routes/Collection";
 
