@@ -11,7 +11,7 @@ export const Detail: React.FC = () => {
   const { imageId } = useParams();
   const navigate = useNavigate();
 
-  const { user, addArtwork } = useAppContext();
+  const { user, addArtwork, isSupabaseLoading } = useAppContext();
 
   const { data, isLoading } = useQuery(["detail", imageId], () =>
     axios
@@ -46,7 +46,7 @@ export const Detail: React.FC = () => {
     navigate("/collection");
   };
 
-  if (isLoading) {
+  if (isLoading || isSupabaseLoading) {
     return <Loader />;
   }
 

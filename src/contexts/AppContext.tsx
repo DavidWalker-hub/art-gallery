@@ -11,6 +11,7 @@ interface IAppContext {
   addArtwork: (artwork: Image) => Promise<void>;
   removeArtwork: (artId: Image["id"]) => Promise<void>;
   userCollection: Image[] | null;
+  isSupabaseLoading: boolean;
 }
 
 const AppContext = createContext<IAppContext>({
@@ -21,6 +22,7 @@ const AppContext = createContext<IAppContext>({
   addArtwork: async (artwork: Image) => {},
   removeArtwork: async (artId: Image["id"]) => {},
   userCollection: null,
+  isSupabaseLoading: false,
 });
 
 export const AppContextProvider = ({
@@ -40,10 +42,12 @@ const useAppContextStore = () => {
   const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
   const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
   const supabase = createClient(supabaseUrl, supabaseKey);
+  const [isSupabaseLoading, setIsSupabaseLoading] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
   const [userCollection, setUserCollection] = useState<Image[] | null>(null);
 
   const register = async (email: string, password: string) => {
+    setIsSupabaseLoading(true);
     try {
       const { data, error } = await supabase.auth.signUp({
         email,
@@ -54,6 +58,7 @@ const useAppContextStore = () => {
     } catch (error) {
       console.log("error", error);
     }
+    setIsSupabaseLoading(false);
   };
 
   useEffect(() => {
@@ -71,16 +76,17 @@ const useAppContextStore = () => {
   }, []);
 
   const login = async (email: string, password: string) => {
+    setIsSupabaseLoading(true);
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { data } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
       setUser(data.user);
-      console.log("error", error);
     } catch (error) {
       console.log("error", error);
     }
+    setIsSupabaseLoading(false);
   };
 
   const logout = async () => {
@@ -93,6 +99,7 @@ const useAppContextStore = () => {
   };
 
   const addArtwork = async (artwork: Image) => {
+    setIsSupabaseLoading(true);
     try {
       const { data: savedArtwork } = await supabase
         .from("artwork")
@@ -129,9 +136,11 @@ const useAppContextStore = () => {
     } catch (error) {
       console.log("error", error);
     }
+    setIsSupabaseLoading(false);
   };
 
   const removeArtwork = async (artId: Image["id"]) => {
+    setIsSupabaseLoading(true);
     try {
       if (user) {
         await supabase
@@ -144,6 +153,7 @@ const useAppContextStore = () => {
     } catch (error) {
       console.log("error", error);
     }
+    setIsSupabaseLoading(false);
   };
 
   const getUserCollection = async () => {
@@ -172,5 +182,6 @@ const useAppContextStore = () => {
     addArtwork,
     userCollection,
     removeArtwork,
+    isSupabaseLoading,
   };
 };

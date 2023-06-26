@@ -3,9 +3,10 @@ import React from "react";
 import { useAppContext } from "../contexts/AppContext";
 import { Gallery } from "../components/Gallery";
 import { Image } from "../types/image";
+import { Loader } from "../components/Loader";
 
 export const Collection: React.FC = () => {
-  const { userCollection, removeArtwork } = useAppContext();
+  const { userCollection, removeArtwork, isSupabaseLoading } = useAppContext();
   const handleRemoveArtwork = (artwork: Image) => {
     removeArtwork(artwork.id);
   };
@@ -21,11 +22,15 @@ export const Collection: React.FC = () => {
       >
         My Collection
       </Typography>
-      <Gallery
-        images={userCollection ? userCollection : []}
-        isCollection
-        handleRemoveArtwork={handleRemoveArtwork}
-      />
+      {isSupabaseLoading ? (
+        <Loader />
+      ) : (
+        <Gallery
+          images={userCollection ? userCollection : []}
+          isCollection
+          handleRemoveArtwork={handleRemoveArtwork}
+        />
+      )}
     </Container>
   );
 };
