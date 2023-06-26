@@ -63,7 +63,12 @@ export const Root: React.FC = () => {
                 <Avatar>{user.email?.slice(0, 1).toUpperCase()}</Avatar>
               </IconButton>
               <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-                <MenuItem onClick={() => navigate("/collection")}>
+                <MenuItem
+                  onClick={() => {
+                    navigate("/collection");
+                    handleClose();
+                  }}
+                >
                   Collection
                 </MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
