@@ -1,17 +1,18 @@
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { useAppContext } from "../contexts/appContext";
+import { useAppContext } from "../contexts/AppContext";
+import { useNavigate } from "react-router-dom";
 
 export const Register: React.FC = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const { register, user } = useAppContext();
   console.log("user", user);
-  const handleRegister = (event: React.FormEvent) => {
+  const handleRegister = async (event: React.FormEvent) => {
     event.preventDefault();
-    register(email, password);
-    console.log("email", email);
-    console.log("password", password);
+    await register(email, password);
+    navigate("/");
   };
   return (
     <Box>
