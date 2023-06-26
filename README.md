@@ -15,7 +15,7 @@ Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
 
 The following database tables are required:
 
-###artwork
+### artwork
 
 | Field            | Type      |
 | ---------------- | --------- |
@@ -27,7 +27,7 @@ The following database tables are required:
 | year             | VARCHAR   |
 | created_at       | timestamp |
 
-###users_artwork
+### users_artwork
 
 | Field            | Type      |
 | ---------------- | --------- |
