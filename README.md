@@ -15,6 +15,8 @@ Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
 
 The following database tables are required:
 
+###artwork
+
 | Field            | Type      |
 | ---------------- | --------- |
 | id               | BIGINT    |
@@ -25,7 +27,14 @@ The following database tables are required:
 | year             | VARCHAR   |
 | created_at       | timestamp |
 
+###users_artwork
+
 | Field            | Type      |
 | ---------------- | --------- |
 | user_id          | UUID      |
 | artwork_id       | BIGINT    |
+
+
+## Harvard Museum API
+
+An Api key is required to access the images from the harvard API. It can be accessed here [Harvard art museum](https://www.harvardartmuseums.org/collections/api))
