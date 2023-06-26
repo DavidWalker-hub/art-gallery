@@ -1,6 +1,7 @@
 export interface Image {
-  id: number;
-  image: string;
+  id?: number;
+  harvard_ref: number;
+  image_src: string;
   title: string;
   year: string;
   artist: string;
