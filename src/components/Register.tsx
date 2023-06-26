@@ -46,15 +46,17 @@ export const Register: React.FC = () => {
                 fullWidth
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </Grid>
             <Grid item xs={7}>
               <TextField
                 type="password"
-                label="Password"
+                label="Password must be at least 6 characters"
                 fullWidth
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
             </Grid>
           </Grid>
