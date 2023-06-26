@@ -1,17 +1,9 @@
-import {
-  Box,
-  Container,
-  Grid,
-  ImageList,
-  ImageListItem,
-  ImageListItemBar,
-  Link,
-} from "@mui/material";
+import { Container } from "@mui/material";
 import axios from "axios";
-import React, { useState } from "react";
+import React from "react";
 import { useQuery } from "react-query";
 import { Image } from "../types/image";
-import { Link as RouterLink } from "react-router-dom";
+import { Gallery } from "../components/Gallery";
 
 export const Home: React.FC = () => {
   const { data } = useQuery(
@@ -40,15 +32,15 @@ export const Home: React.FC = () => {
               ).name;
             }
             return {
-              id: record.id,
+              harvard_ref: record.id,
               title: record.title,
-              image: record.primaryimageurl,
+              image_src: record.primaryimageurl,
               year: record.dated,
               artist,
             };
           });
           return data
-            .filter((record: Image) => record.image !== null)
+            .filter((record: Image) => record.image_src !== null)
             .slice(0, 6);
         }),
     {
@@ -58,37 +50,7 @@ export const Home: React.FC = () => {
   console.log("data", data);
   return (
     <Container>
-      <ImageList
-        sx={{
-          marginTop: "10vh",
-        }}
-        rowHeight={300}
-        cols={3}
-        gap={6}
-      >
-        {data?.map((image: Image) => (
-          <Link
-            component={RouterLink}
-            to={`/detail/${image.id}`}
-            sx={{ textDecoration: "none", color: "black" }}
-            key={image.id}
-          >
-            <ImageListItem sx={{ maxHeight: 280, maxWidth: "100%" }}>
-              <img src={image.image} style={{ height: 170, width: "100%" }} />
-              <ImageListItemBar
-                title={image.title}
-                position="below"
-                subtitle={
-                  <span>
-                    Artist: {image.artist} | Date: {image.year}
-                  </span>
-                }
-                sx={{ maxWidth: 350 }}
-              />
-            </ImageListItem>
-          </Link>
-        ))}
-      </ImageList>
+      <Gallery images={data} />
     </Container>
   );
 };
